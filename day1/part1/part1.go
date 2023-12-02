@@ -23,7 +23,7 @@ func ConvertStringToInt(s string) int {
 }
 
 func main() {
-	data, err := os.ReadFile("input.txt")
+	data, err := os.ReadFile("../input.txt")
 	if err != nil {
 		panic("Error reading file")
 	}
