@@ -32,7 +32,8 @@ func main() {
 	var data string = string(data_raw) 
 
 	for i:=0; i<len(numbers); i++ {
-		data = strings.ReplaceAll(data, numbers[i], strconv.Itoa(i)) // this is replacing some of the letters we need, eightwo becomes eigh2
+		var new_string string = string(numbers[i][0]) + strconv.Itoa(i) + string(numbers[i][len(numbers[i])-1])
+		data = strings.ReplaceAll(data, numbers[i], new_string)
 	}
 
 	var sum int = 0
@@ -47,7 +48,6 @@ func main() {
 		}
 		if (data[i] == 10) {
 			sum += ConvertStringToInt(first + second)
-			// fmt.Println(temp + "|" + first + second)
 			new_line = true
 			temp = ""
 			continue
@@ -63,9 +63,5 @@ func main() {
 		}
 
 	}
-
 	fmt.Println(sum)
-
-
-
 }
