@@ -7,8 +7,7 @@ import (
 )
 
 func IsNumericChar(c byte) bool {
-	
-	if (c >= 0 && c <= '9') {
+	if (c >= '0' && c <= '9') {
 		return true
 	}
 	return false
@@ -33,7 +32,7 @@ func main() {
 	var second string 
 	var new_line = true
 	for i:=0; i<len(data); i++{
-		if !IsNumericChar(data[i]){
+		if !IsNumericChar(data[i]) && data[i] != 10{
 			continue
 		}
 		if (data[i] == 10) {
