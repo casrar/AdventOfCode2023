@@ -12,7 +12,7 @@ const GREEN_MAX = 13
 const BLUE_MAX = 14
 
 
-func StringToIneger(s string) int {
+func StringToInteger(s string) int {
 	i, err := strconv.Atoi(s)
 	if err != nil {
 		panic("Error converting string to int: \"" + s +"\"")
@@ -31,6 +31,19 @@ func FormatData(s string) string {
 	return s
 }
 
+
+func ValidCount(color string, count int) bool {
+	if color == "r" && count > RED_MAX {
+		return false
+	}
+	if color == "g" && count > GREEN_MAX {
+		return false
+	}
+	if color == "b" && count > BLUE_MAX {
+		return false
+	} 
+	return true
+}
 func main() {
 	
 	raw_data, err := os.ReadFile("../input.txt")
@@ -53,7 +66,7 @@ func main() {
 
 		curr_string := string(data[i])
 		if curr_string == ":" {
-			game_id = StringToIneger(temp_string)
+			game_id = StringToInteger(temp_string)
 			temp_string = ""
 			continue 
 		} 
@@ -63,16 +76,11 @@ func main() {
 			continue
 		}
 
-		value := StringToIneger(temp_string)
-		if curr_string == "r" && value > RED_MAX {
+		count := StringToInteger(temp_string)
+		if !ValidCount(curr_string, count) {
 			game_id = 0
 		}
-		if curr_string == "g" && value > GREEN_MAX {
-			game_id = 0
-		}
-		if curr_string == "b" && value > BLUE_MAX {
-			game_id = 0
-		}
+		
 		temp_string = ""
 	}
 
