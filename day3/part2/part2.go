@@ -23,14 +23,16 @@ func IsNumericChar(c byte) bool {
 }
 
 func main() {
-	raw_data, err := os.ReadFile("../input.txt")
+	raw_data, err := os.ReadFile("../test.txt")
 	if err != nil {
 		panic("Error reading file")
 	}
 
 	var data string = string(raw_data)
 	data = strings.ReplaceAll(data, "\n", "")
-	var offsets = [8]int{-141, -140, -139, -1, 1, 139, 140, 141}  
+	// var offsets = [8]int{-141, -140, -139, -1, 1, 139, 140, 141}  
+	var offsets = [8]int{-11, -10, -9, -1, 1, 9, 10, 11}  
+
 	var sum int = 0
 	for i:=0;i<len(data);i++ {
 		curr := string(data[i])
@@ -51,8 +53,9 @@ func main() {
 				is_continuous = false
 			} else if !is_continuous && IsNumericChar(data[(i+offset)]) {
 				last_index = i + offset
-			} else {
-				continue
+			} else if first_index > -1 && offset == 1 && IsNumericChar(data[(i+offset)]) { // Handles case ###.###
+				is_continuous = false
+				last_index = i + offset
 			}
 		}
 		if last_index == -1 || is_continuous {
@@ -101,9 +104,7 @@ func main() {
 			second_num += string(data[last_index])
 			last_index++
 		}
-		// fmt.Println("first num: " + string(first_num))
-		// fmt.Println("second num: " + string(second_num))
-		sum += StringToInteger(first_num) * StringToInteger(second_num)
+		sum += (StringToInteger(first_num) * StringToInteger(second_num))
 	}
 	fmt.Println(sum)
 }
