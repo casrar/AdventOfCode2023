@@ -30,8 +30,8 @@ func main() {
 
 	var data string = string(raw_data)
 	data = strings.ReplaceAll(data, "\n", "")
-	// var offsets = [8]int{-141, -140, -139, -1, 1, 139, 140, 141}  
-	var offsets = [8]int{-11, -10, -9, -1, 1, 9, 10, 11}  
+	var offsets = [8]int{-141, -140, -139, -1, 1, 139, 140, 141}  
+
 
 	var sum int = 0
 	for i:=0;i<len(data);i++ {
@@ -47,18 +47,30 @@ func main() {
 			if i + offset < 0 || i + offset > len(data) {
 				continue
 			} 
+
+			fmt.Print("Offset: ")
+			fmt.Print(offset)
+			fmt.Println( " | curr: " + string(data[(i+offset)]))
+			
+
+			// unhandled edge cases
 			if first_index == -1 && IsNumericChar(data[(i+offset)]) {
+				fmt.Println("first if")
 				first_index = i + offset
 			} else if first_index > -1 && !IsNumericChar(data[(i+offset)]) {
+				fmt.Println("second if")
 				is_continuous = false
 			} else if !is_continuous && IsNumericChar(data[(i+offset)]) {
+				fmt.Println("third if")
 				last_index = i + offset
-			} else if first_index > -1 && offset == 1 && IsNumericChar(data[(i+offset)]) { // Handles case ###.###
+			} else if first_index > -1 && offset == 1 && IsNumericChar(data[(i+offset)]) { 
+				fmt.Println("fourth if")
 				is_continuous = false
 				last_index = i + offset
 			}
 		}
 		if last_index == -1 || is_continuous {
+			fmt.Println("in")
 			continue
 		}
 		for {
@@ -104,6 +116,7 @@ func main() {
 			second_num += string(data[last_index])
 			last_index++
 		}
+		fmt.Println("First num: " + first_num + " | Second num: " + second_num)
 		sum += (StringToInteger(first_num) * StringToInteger(second_num))
 	}
 	fmt.Println(sum)
